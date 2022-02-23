@@ -26,8 +26,9 @@ namespace WindowsFormsApp
         {
             double a =Convert.ToDouble(textBox1.Text);
             double b =Convert.ToDouble(textBox2.Text);
-            double c =a+b;
-            textBox3.Text = Convert.ToString(c);
+            //double c =Convert.ToDouble(textBox3.Text);
+            double d =a+b;
+            textBox3.Text = Convert.ToString(d);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -51,6 +52,16 @@ namespace WindowsFormsApp
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
         }
