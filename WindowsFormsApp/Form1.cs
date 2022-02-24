@@ -26,9 +26,9 @@ namespace WindowsFormsApp
         {
             double a =Convert.ToDouble(textBox1.Text);
             double b =Convert.ToDouble(textBox2.Text);
-            //double c =Convert.ToDouble(textBox3.Text);
-            double d =a+b;
-            textBox3.Text = Convert.ToString(d);
+            double c =Convert.ToDouble(textBox3.Text);
+            double d =a+b+c;
+            textBox4.Text = Convert.ToString(d);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

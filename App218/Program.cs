@@ -20,6 +20,7 @@ namespace App218
             double d = a + b;
             Console.WriteLine(d);
             Console.WriteLine($"a+b+c: {a + b + c}");
+            Console.ReadKey();
         }
     }
 
