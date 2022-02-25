@@ -26,15 +26,10 @@ namespace WindowsFormsApp
         {
             double a =Convert.ToDouble(textBox1.Text);
             double b =Convert.ToDouble(textBox2.Text);
-            double c =Convert.ToDouble(textBox3.Text);
-            double d =a+b+c;
-            textBox4.Text = Convert.ToString(d);
+            double c =a+b;
+            textBox4.Text = Convert.ToString(c);
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -64,6 +59,30 @@ namespace WindowsFormsApp
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            double a = Convert.ToDouble(textBox1.Text);
+            double b = Convert.ToDouble(textBox2.Text);
+            double c = a - b;
+            textBox4.Text = Convert.ToString(c);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            double a = Convert.ToDouble(textBox1.Text);
+            double b = Convert.ToDouble(textBox2.Text);
+            double c = a * b;
+            textBox4.Text = Convert.ToString(c);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            double a = Convert.ToDouble(textBox1.Text);
+            double b = Convert.ToDouble(textBox2.Text);
+            double c = a / b;
+            textBox4.Text = Convert.ToString(c);
         }
     }
 }

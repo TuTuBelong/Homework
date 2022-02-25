@@ -15,11 +15,27 @@ namespace App218
             double a = Convert.ToDouble(Console.ReadLine());
             Console.WriteLine("请输入number2的值：");
             double b = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("请输入进位的值：");
-            double c = Convert.ToDouble(Console.ReadLine());
-            double d = a + b;
-            Console.WriteLine(d);
-            Console.WriteLine($"a+b+c: {a + b + c}");
+            Console.WriteLine("请输入要选择的运算方式（+，-，*，/）：");
+            string c = Convert.ToString(Console.ReadLine());
+            switch (c)
+            {
+                case "+":
+                    Console.WriteLine($"a+b: {a + b}");
+                    break;
+                case "-":
+                    Console.WriteLine($"a-b: {a - b}");
+                    break;
+                case "*":
+                    Console.WriteLine($"a*b: {a * b}");
+                    break;
+                case "/":
+                    Console.WriteLine($"a/b: {a / b}");
+                    break;
+
+                default: 
+                    Console.WriteLine("输入有误");
+                    break;
+            }
             Console.ReadKey();
         }
     }
