@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,13 +35,13 @@ namespace clock
         public void run()
         {
             Hour = Minute =Second= 0;
-            for(int i = 0; i < 23; i++)
+            for(int i = 0; i < 24; i++)
             {
                 Hour = i;
-                for(int j = 0; j < 59; j++)
+                for(int j = 0; j < 60; j++)
                 {
                     Minute = j;
-                    for(int k = 0; k < 59; k++)
+                    for(int k = 0; k < 60; k++)
                     {
                         Second = k;
                         Thread.Sleep(1000);
