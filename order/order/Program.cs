@@ -50,7 +50,7 @@ namespace order
         }
         public void showOrderDetail()  
         {
-            Console.WriteLine("序号 名称 数量 单价");
+            Console.WriteLine("序号 货物名称 数量 单价");
             foreach (OrderDetail a in this.orderDetail)
             {
                 Console.WriteLine("{0} {1} {2} {3}", this.orderDetail.IndexOf(a)+1, a.Name, a.Number, a.Price);
@@ -91,9 +91,8 @@ namespace order
                 private List<Order> orderList = new List<Order>();
                  public void SearchOrder()
                 {
-
-                    //按1.2.3.4分别查询订单编号，金额范围，客户名称和订单名称
-                    Console.WriteLine("请输入查询任务的编码：1.订单编号，2.订单金额，3.客户名称，4.订单名称");
+                    //按1.2.3.4分别查询订单编号，总价范围，客户名称和订单名称
+                    Console.WriteLine("请输入查询任务的编码：1.订单编号，2.订单总价范围，3.客户名称，4.订单名称");
                     int i = Convert.ToInt32(Console.ReadLine());
                     switch (i)
                     {
@@ -116,9 +115,9 @@ namespace order
                             Console.ReadKey();
                             break;
                         case 2:
-                            Console.WriteLine("请输入查询金额的最大值");
+                            Console.WriteLine("请输入查询价格的最大值");
                             int max = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("请输入查询金额的最小值");
+                            Console.WriteLine("请输入查询价格的最小值");
                             int min = Convert.ToInt32(Console.ReadLine());
                             var query2 = from s2 in orderList
                                          where s2.Price <= max && s2.Price >= min
@@ -223,25 +222,25 @@ namespace order
                               { a.orderDetail.Add(b); 
                                 a.Price=a.getAllPrice();
                               }
-                            Console.WriteLine("是否继续添加订单项：");
+                            Console.WriteLine("是否继续添加订单项：1.是，2.否");
                             string x = Console.ReadLine();
-                            if (x == "否") judge = false;
-                            else if (x == "是") continue;
-                            else if (x != "否" && x != "是")
+                            if (x == "2") judge = false;
+                            else if (x == "1") continue;
+                            else if (x != "1" && x != "2")
                             {
                                 Exception e = new Exception();
                                 throw e;
                             }
                         }
                         orderList.Add(a);
-                        Console.WriteLine("建立成功");
+                        Console.WriteLine("successfully!");
                     }
                 }
-                public void removeOrder()           //删除订单
+                public void removeOrder()           
                 {
                     try
                     {
-                        Console.WriteLine("输入订单号删除订单：");
+                        Console.WriteLine("输入单号删除订单：");
                         int id = Convert.ToInt32(Console.ReadLine());
                         int index = 0;
                         foreach (Order a in this.orderList)
@@ -249,7 +248,6 @@ namespace order
                             if (a.Id == id) index = this.orderList.IndexOf(a);
                         }
                         this.orderList.RemoveAt(index); Console.WriteLine("删除成功"); Console.WriteLine("-----------------"); 
-                        Console.WriteLine("输入错误"); 
                     
                     }
                     catch
@@ -279,7 +277,7 @@ namespace order
                 bool a = true;
             while(a)
             {
-                Console.WriteLine("输入1增加订单，输入2删除订单，输入3查询订单，输入4显示所有订单");
+                Console.WriteLine("1增加订单，2删除订单，3查询订单，4显示所有订单");
                 string choose1 = Console.ReadLine();
                 switch (choose1)
                 {
