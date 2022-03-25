@@ -30,21 +30,25 @@ namespace order
             Order o = obj as Order;
             return this.Id == o.Id;
         }
-        public void getAllPrice()  //计算总价
+        public override int GetHashCode()
+        {
+          return Id;
+        }
+        public int getAllPrice()  
         {
             int i = 0;
             foreach (OrderDetail a in this.orderDetail)
             {
                 i = i + a.getPrice();
             }
-            this.Price = i;
+            return i;
 
         }
-          public void addOrderDetail(OrderDetail a)   //添加订单项
-          {
+        public void addOrderDetail(OrderDetail a)   
+        {
             orderDetail.Add(a);
-          }
-        public void showOrderDetail()  //展示订单项
+        }
+        public void showOrderDetail()  
         {
             Console.WriteLine("序号 名称 数量 单价");
             foreach (OrderDetail a in this.orderDetail)
@@ -53,53 +57,14 @@ namespace order
             }
         }
     }
-        public class OrderDetail               //订单明细项
+        public class OrderDetail               
         {
             private string name;
-            public string Name
-            {
-                get
-                {
-                    return name;
-                }
-                set
-                {
-                    name = value;
-                }
-            }
             private int number;
-            public int Number
-            {
-                get
-                {
-                    return number;
-                }
-                set
-                {
-                    if (value >= 0) number = value;
-                    else Console.WriteLine("数量不应该小于0");
-                }
-            }
             private int price;
-            public int Price
-            {
-                get
-                {
-                    return price;
-                }
-                set
-                {
-                    price = value;
-                }
-            }
-
-            public OrderDetail()//无参构造函数
-            {
-                this.Name = string.Empty;
-                this.Number = 0;
-                this.Price = 0;
-            }
-
+             public string Name { get { return name; }  }
+             public int Number { get { return number; } }
+              public int Price { get { return price; } }
             public OrderDetail(string name, int number, int price)
             {
                 this.name = name;
@@ -110,20 +75,20 @@ namespace order
             {
                 return this.number * this.price;
             }
-        //public int CompareTo(object obj)
-        //{
-        //    OrderDetail a = obj as OrderDetail;
-        //    return this.name.CompareTo(a.name);
-        //}
-            public override bool Equals(object obj)
+            public int CompareTo(object obj)
             {
-                OrderDetail o = obj as OrderDetail;
-                return this.name == o.name;
+              OrderDetail a = obj as OrderDetail;
+              return this.name.CompareTo(a.name);
             }
-    }
+            public override bool Equals(object obj)
+                    {
+                        OrderDetail o = obj as OrderDetail;
+                        return this.name == o.name;
+                    }
+            }
         class orderService
         {
-                public List<Order> orderList = new List<Order>();
+                private List<Order> orderList = new List<Order>();
                  public void SearchOrder()
                 {
 
@@ -212,96 +177,98 @@ namespace order
                             break;
                     }
                 }
-            public void AddOrder()
-            {
-                Console.WriteLine("请输入订单号");
-                int i = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("请输入订单价格");
-                int j = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("请输入订单名称");
-                string m = Console.ReadLine();
-                Console.WriteLine("请输入客户名称");
-                string n = Console.ReadLine();
-                Order a = new Order();
-                a.Id = i;
-                a.OrderName = m;
-                a.Price = j;
-                a.ClientName = n;
-                bool judge = true;
-                bool same = false;
-                foreach (Order k in this.orderList)
+                public void AddOrder()
                 {
-                    if (k.Equals(a)) same = true;
-                }
-                if (same) Console.WriteLine("订单号重复");
-                else
-                {
-                    while (judge && !same)
+                    Console.WriteLine("请输入订单号");
+                    int i = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("请输入订单价格");
+                    int j = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("请输入订单名称");
+                    string m = Console.ReadLine();
+                    Console.WriteLine("请输入客户名称");
+                    string n = Console.ReadLine();
+                    Order a = new Order();
+                    a.Id = i;
+                    a.OrderName = m;
+                    a.Price = j;
+                    a.ClientName = n;
+                    bool judge = true;
+                    bool same = false;
+                    foreach (Order k in this.orderList)
                     {
-                        Console.WriteLine("请输入物品名称：");
-                        string name = Console.ReadLine();
-                        Console.WriteLine("请输入购买数量：");
-                        int number = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("请输入单价：");
-                        int price = Convert.ToInt32(Console.ReadLine());
-                        OrderDetail b = new OrderDetail(name,number,price);
-                         //a.orderDetail.Add(b);
-                        bool flag=false;
-                        foreach (OrderDetail k in a.orderDetail)
-                        {
-                            if (k.Equals(b))
-                                flag = true;
-                        }
-                        if(flag)
-                            Console.WriteLine("订单内容重复");
-                        else
-                            a.orderDetail.Add(b);
-                        Console.WriteLine("是否继续添加订单项：");
-                        string x = Console.ReadLine();
-                        if (x == "否") judge = false;
-                        else if (x == "是") continue;
-                        else if (x != "否" && x != "是")
-                        {
-                            Exception e = new Exception();
-                            throw e;
-                        }
+                        if (k.Equals(a)) same = true;
                     }
-                    orderList.Add(a);
-                    Console.WriteLine("建立成功");
-                }
-            }
-            public void removeOrder()           //删除订单
-            {
-                try
-                {
-                    Console.WriteLine("输入订单号删除订单：");
-                    int id = Convert.ToInt32(Console.ReadLine());
-                    int index = 0;
-                    foreach (Order a in this.orderList)
+                    if (same) Console.WriteLine("订单号重复");
+                    else
                     {
-                        if (a.Id == id) index = this.orderList.IndexOf(a);
+                        while (judge && !same)
+                        {
+                            Console.WriteLine("请输入物品名称：");
+                            string name = Console.ReadLine();
+                            Console.WriteLine("请输入购买数量：");
+                            int number = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("请输入单价：");
+                            int price = Convert.ToInt32(Console.ReadLine());
+                            OrderDetail b = new OrderDetail(name,number,price);
+                             //a.orderDetail.Add(b);
+                            bool flag=false;
+                            foreach (OrderDetail k in a.orderDetail)
+                            {
+                                if (k.Equals(b))
+                                    flag = true;
+                            }
+                              if (flag)
+                                Console.WriteLine("订单内容重复");
+                              else
+                              { a.orderDetail.Add(b); 
+                                a.Price=a.getAllPrice();
+                              }
+                            Console.WriteLine("是否继续添加订单项：");
+                            string x = Console.ReadLine();
+                            if (x == "否") judge = false;
+                            else if (x == "是") continue;
+                            else if (x != "否" && x != "是")
+                            {
+                                Exception e = new Exception();
+                                throw e;
+                            }
+                        }
+                        orderList.Add(a);
+                        Console.WriteLine("建立成功");
                     }
-                    this.orderList.RemoveAt(index); Console.WriteLine("删除成功"); Console.WriteLine("-----------------"); 
-                    Console.WriteLine("输入错误"); 
+                }
+                public void removeOrder()           //删除订单
+                {
+                    try
+                    {
+                        Console.WriteLine("输入订单号删除订单：");
+                        int id = Convert.ToInt32(Console.ReadLine());
+                        int index = 0;
+                        foreach (Order a in this.orderList)
+                        {
+                            if (a.Id == id) index = this.orderList.IndexOf(a);
+                        }
+                        this.orderList.RemoveAt(index); Console.WriteLine("删除成功"); Console.WriteLine("-----------------"); 
+                        Console.WriteLine("输入错误"); 
                     
-                }
-                catch
-                {
-                    Console.WriteLine("输入错误");
-                }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("输入错误");
+                    }
 
-            }
-            public void ShowOrder()
-            {
-                foreach (Order a in orderList)
-                {
-                    Console.Write("订单名称"+a.OrderName + " ");
-                    Console.Write("订单编号"+a.Id + " ");
-                    Console.Write("订单总价"+a.Price + " ");
-                    Console.Write("客户名称"+a.ClientName + "\n");
-                    a.showOrderDetail();
                 }
-            }
+                public void ShowOrder()
+                {
+                    foreach (Order a in orderList)
+                    {
+                        Console.Write("订单名称"+a.OrderName + " ");
+                        Console.Write("订单编号"+a.Id + " ");
+                        Console.Write("订单总价"+a.Price + " ");
+                        Console.Write("客户名称"+a.ClientName + "\n");
+                        a.showOrderDetail();
+                    }
+                }
         }
         internal class Program
         {
