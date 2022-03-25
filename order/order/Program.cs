@@ -39,7 +39,7 @@ namespace order
             int i = 0;
             foreach (OrderDetail a in this.orderDetail)
             {
-                i = i + a.getPrice();
+                i =  a.getPrice();
             }
             return i;
 
