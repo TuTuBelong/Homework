@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace order
 {
@@ -20,7 +22,7 @@ namespace order
             this.Price = 0;
             this.ClientName = string.Empty;
         }
-        public Order(int id,string i,int p,string j)
+        public Order(int id, string i, int p, string j)
         {
             this.Id = id;
             this.OrderName = i;
@@ -53,6 +55,10 @@ namespace order
         }
         public void addOrderDetail(OrderDetail a)
         {
+            if (this.orderDetail.Contains(a))
+            {
+                throw new ApplicationException($"The goods ({a.Name}) exist in order {Id}");
+            }
             orderDetail.Add(a);
         }
         public void showOrderDetail()
@@ -62,6 +68,24 @@ namespace order
             {
                 Console.WriteLine("{0} {1} {2} {3}", this.orderDetail.IndexOf(a) + 1, a.Name, a.Number, a.Price);
             }
+        }
+        public void export()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Order));
+            using (FileStream fs = new FileStream("order.xml", FileMode.Create))
+            {
+                serializer.Serialize(fs, this);
+            }
+        }
+        public List<Order> import()
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Order));
+            using (FileStream fs = new FileStream("order.xml", FileMode.Open))
+            {
+                List<Order> list = (List<Order>)xmlSerializer.Deserialize(fs);
+                return list;
+            }
+
         }
     }
     public class OrderDetail
@@ -103,7 +127,7 @@ namespace order
             List<Order> list1 = query1.ToList();
             return list1;
         }
-        public List<Order> SearchPrice(int max,int min)
+        public List<Order> SearchPrice(int max, int min)
         {
             var query2 = from s2 in orderList
                          where s2.Price <= max && s2.Price >= min
@@ -121,78 +145,44 @@ namespace order
             List<Order> list3 = query3.ToList();
             return list3;
         }
-        public void AddOrder(int i,string m,int j,string n)
+        public void AddOrder(Order a)
         {
 
-            Order a = new Order(i, m, j, n);
-            bool judge = true;
-            bool same = false;
-            foreach (Order k in this.orderList)
+            if (a == null)
             {
-                if (k.Equals(a)) same = true;
+                throw new ApplicationException($"Invalid order!");
             }
-            if (same) Console.WriteLine("订单号重复");
-            else
+            if (orderList.Contains(a))
             {
-                while (judge && !same)
-                {
-                    Console.WriteLine("请输入物品名称：");
-                    string name = Console.ReadLine();
-                    Console.WriteLine("请输入购买数量：");
-                    int number = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("请输入单价：");
-                    int price = Convert.ToInt32(Console.ReadLine());
-                    OrderDetail b = new OrderDetail(name, number, price);
-                    //a.orderDetail.Add(b);
-                    bool flag = false;
-                    foreach (OrderDetail k in a.orderDetail)
-                    {
-                        if (k.Equals(b))
-                            flag = true;
-                    }
-                    if (flag)
-                        Console.WriteLine("订单内容重复");
-                    else
-                    {
-                        a.orderDetail.Add(b);
-                        a.Price = a.getAllPrice();
-                    }
-                    Console.WriteLine("是否继续添加订单项：1.是，2.否");
-                    string x = Console.ReadLine();
-                    if (x == "2") judge = false;
-                    else if (x == "1") continue;
-                    else if (x != "1" && x != "2")
-                    {
-                        Exception e = new Exception();
-                        throw e;
-                    }
-                }
-                orderList.Add(a);
-                Console.WriteLine("successfully!");
+                throw new ApplicationException($"the order {a.Id} already exists!");
             }
+            orderList.Add(a);
+            Console.WriteLine("s!");
         }
-        public void removeOrder()
+    
+    public void removeOrder()
+    {
+        try
         {
-            try
+            Console.WriteLine("输入单号删除订单：");
+            int id = Convert.ToInt32(Console.ReadLine());
+            int index = 0;
+            foreach (Order a in this.orderList)
             {
-                Console.WriteLine("输入单号删除订单：");
-                int id = Convert.ToInt32(Console.ReadLine());
-                int index = 0;
-                foreach (Order a in this.orderList)
-                {
-                    if (a.Id == id) index = this.orderList.IndexOf(a);
-                }
-                this.orderList.RemoveAt(index); Console.WriteLine("删除成功"); Console.WriteLine("-----------------");
-
+                if (a.Id == id) index = this.orderList.IndexOf(a);
             }
-            catch
-            {
-                Console.WriteLine("输入错误");
-            }
+            this.orderList.RemoveAt(index); Console.WriteLine("删除成功");
 
         }
-        public void ShowOrder()
+        catch
         {
+            Console.WriteLine("输入错误");
+        }
+
+    }
+    public void ShowOrder()
+    {
+
             foreach (Order a in orderList)
             {
                 Console.Write("订单名称" + a.OrderName + " ");
@@ -201,82 +191,92 @@ namespace order
                 Console.Write("客户名称" + a.ClientName + "\n");
                 a.showOrderDetail();
             }
+
         }
-    }
-    internal class Program
+}
+internal class Program
+{
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Order order = new Order();
+
             orderService service = new orderService();
             bool i = true;
-            while (i)
+        while (i)
+        {
+            
+            Order order1 = new Order(1, "食品", 1000, "小康");
+            Order order2 = new Order(2, "电子产品", 5000, "谢劲松");
+            Console.WriteLine("1增加订单，2删除订单，3按订单号查询订单，4显示所有订单，5.按订单金额查询，6.按订单名称查询");
+            string choose1 = Console.ReadLine();
+            switch (choose1)
             {
-                Console.WriteLine("1增加订单，2删除订单，3按订单号查询订单，4显示所有订单，5.按订单金额查询，6.按订单名称查询");
-                string choose1 = Console.ReadLine();
-                switch (choose1)
-                {
-                    case "1":
-                        Console.WriteLine("请输入订单号");
-                        int k = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("请输入订单价格");
-                        int j = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("请输入订单名称");
-                        string m = Console.ReadLine();
-                        Console.WriteLine("请输入客户名称");
-                        string n = Console.ReadLine();
-                        service.AddOrder(k,m,j,n);
-                        break;
-                    case "2": service.removeOrder(); break;
-                    case "3":
-                        Console.WriteLine("请输入查询的订单编号");
-                        int j1 = Convert.ToInt32(Console.ReadLine());
-                        List<Order> list1=service.SearchId(j1);
-                        foreach (Order a in list1)
-                        {
-                            Console.Write("订单名称" + a.OrderName + " ");
-                            Console.Write("订单编号" + a.Id + " ");
-                            Console.Write("订单总价" + a.Price + " ");
-                            Console.Write("客户名称" + a.ClientName + "\n");
-                            a.showOrderDetail();
-                        };
-                        break;
-                    case "4": service.ShowOrder(); break;
-                    case "5":
-                        Console.WriteLine("请输入查询价格的最大值");
-                        int max = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("请输入查询价格的最小值");
-                        int min = Convert.ToInt32(Console.ReadLine());
-                        List<Order> list2=service.SearchPrice(max, min);
-                        foreach (Order a in list2)
-                        {
-                            Console.Write("订单名称" + a.OrderName + " ");
-                            Console.Write("订单编号" + a.Id + " ");
-                            Console.Write("订单总价" + a.Price + " ");
-                            Console.Write("客户名称" + a.ClientName + "\n");
-                            a.showOrderDetail();
-                        }
-                        break;
-                    case "6":
-                        Console.WriteLine("请输入要查询的订单名称");
-                        string k1 = Console.ReadLine();
+                case "1":
+                    
+                    OrderDetail milk = new OrderDetail("牛奶", 5, 5);
+                    OrderDetail orange = new OrderDetail("橘子", 10, 2);
+                    OrderDetail iphone = new OrderDetail("手机", 1, 4000);
+                    OrderDetail computer = new OrderDetail("电脑", 1, 6000);
+                    order1.orderDetail.Add(milk);
+                    order1.orderDetail.Add(orange);
+                    order2.orderDetail.Add(computer);
+                    order2.orderDetail.Add(iphone);
+                    service.AddOrder(order1);
+                    service.AddOrder(order2);
+                        Console.WriteLine(order1.orderDetail.Count);
+                        //Console.WriteLine(service.orderList.Count);
+                        //service.orderList.ForEach(o => Console.WriteLine(o.ClientName));
 
-                        List<Order> list3 = service.SearchOrderName(k1);
-                        foreach (Order a in list3)
-                        {
-                            Console.Write("订单名称" + a.OrderName + " ");
-                            Console.Write("订单编号" + a.Id + " ");
-                            Console.Write("订单总价" + a.Price + " ");
-                            Console.Write("客户名称" + a.ClientName + "\n");
-                            a.showOrderDetail();
-                        }
                         break;
-                    case "7": i = false; break;
-                    default: Console.WriteLine("输入错误"); break;
-                }
+                case "2": service.removeOrder(); break;
+                case "3":
+                    Console.WriteLine("请输入查询的订单编号");
+                    int j1 = Convert.ToInt32(Console.ReadLine());
+                    List<Order> list1 = service.SearchId(j1);
+                    foreach (Order a in list1)
+                    {
+                        Console.Write("订单名称" + a.OrderName + " ");
+                        Console.Write("订单编号" + a.Id + " ");
+                        Console.Write("订单总价" + a.Price + " ");
+                        Console.Write("客户名称" + a.ClientName + "\n");
+                        a.showOrderDetail();
+                    };
+                    break;
+                case "4": service.ShowOrder(); break;
+                case "5":
+                    Console.WriteLine("请输入查询价格的最大值");
+                    int max = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("请输入查询价格的最小值");
+                    int min = Convert.ToInt32(Console.ReadLine());
+                    List<Order> list2 = service.SearchPrice(max, min);
+                    foreach (Order a in list2)
+                    {
+                        Console.Write("订单名称" + a.OrderName + " ");
+                        Console.Write("订单编号" + a.Id + " ");
+                        Console.Write("订单总价" + a.Price + " ");
+                        Console.Write("客户名称" + a.ClientName + "\n");
+                        a.showOrderDetail();
+                    }
+                    break;
+                case "6":
+                    Console.WriteLine("请输入要查询的订单名称");
+                    string k1 = Console.ReadLine();
+
+                    List<Order> list3 = service.SearchOrderName(k1);
+                    foreach (Order a in list3)
+                    {
+                        Console.Write("订单名称" + a.OrderName + " ");
+                        Console.Write("订单编号" + a.Id + " ");
+                        Console.Write("订单总价" + a.Price + " ");
+                        Console.Write("客户名称" + a.ClientName + "\n");
+                        a.showOrderDetail();
+                    }
+                    break;
+                case "7": i = false; break;
+                default: Console.WriteLine("输入错误"); break;
             }
-            Console.ReadKey();
         }
+        Console.ReadKey();
     }
+}
 }
 
