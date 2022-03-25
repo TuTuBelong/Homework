@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,32 +40,15 @@ namespace order
             this.Price = i;
 
         }
-        //public void addOrderDetail(OrderDetail a)   //添加订单项
-        //{
-        //    this.orderDetail.Add(a);
-        //}
-        public void RemoveOrderDetail() //删除订单项
-        {
-            try
-            {
-                Console.WriteLine("请输入订单明细序号删除相应订单明细：");
-                int a = Convert.ToInt32(Console.ReadLine());
-                this.orderDetail.RemoveAt(a);
-                Console.WriteLine("删除成功");
-                Console.WriteLine("-------------------------");
-            }
-            catch
-            {
-                Console.WriteLine("输入序号错误");
-            }
-        }
+          public void addOrderDetail(OrderDetail a)   //添加订单项
+          {
+            orderDetail.Add(a);
+          }
         public void showOrderDetail()  //展示订单项
         {
             Console.WriteLine("序号 名称 数量 单价");
             foreach (OrderDetail a in this.orderDetail)
             {
-
-                Console.WriteLine("-----------------------");
                 Console.WriteLine("{0} {1} {2} {3}", this.orderDetail.IndexOf(a)+1, a.Name, a.Number, a.Price);
             }
         }
@@ -262,7 +245,7 @@ namespace order
                         Console.WriteLine("请输入单价：");
                         int price = Convert.ToInt32(Console.ReadLine());
                         OrderDetail b = new OrderDetail(name,number,price);
-                    //a.orderDetail.Add(b);
+                         //a.orderDetail.Add(b);
                         bool flag=false;
                         foreach (OrderDetail k in a.orderDetail)
                         {
@@ -273,7 +256,7 @@ namespace order
                             Console.WriteLine("订单内容重复");
                         else
                             a.orderDetail.Add(b);
-                    Console.WriteLine("是否继续添加订单项：");
+                        Console.WriteLine("是否继续添加订单项：");
                         string x = Console.ReadLine();
                         if (x == "否") judge = false;
                         else if (x == "是") continue;
@@ -285,28 +268,22 @@ namespace order
                     }
                     orderList.Add(a);
                     Console.WriteLine("建立成功");
-                    Console.WriteLine("-------------------------");
                 }
             }
             public void removeOrder()           //删除订单
             {
                 try
                 {
-                    Console.WriteLine("输入订单号删除订单或相应明细：");
+                    Console.WriteLine("输入订单号删除订单：");
                     int id = Convert.ToInt32(Console.ReadLine());
                     int index = 0;
                     foreach (Order a in this.orderList)
                     {
                         if (a.Id == id) index = this.orderList.IndexOf(a);
                     }
-                    Console.WriteLine("输入1删除订单，输入2继续删除订单明细");
-                    int choose = Convert.ToInt32(Console.ReadLine());
-                    switch (choose)
-                    {
-                        case 1: this.orderList.RemoveAt(index); Console.WriteLine("删除成功"); Console.WriteLine("-----------------"); break;
-                        case 2: this.orderList[index].showOrderDetail(); this.orderList[index].RemoveOrderDetail(); break;
-                        default: Console.WriteLine("输入错误"); break;
-                    }
+                    this.orderList.RemoveAt(index); Console.WriteLine("删除成功"); Console.WriteLine("-----------------"); 
+                    Console.WriteLine("输入错误"); 
+                    
                 }
                 catch
                 {
