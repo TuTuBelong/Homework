@@ -116,7 +116,7 @@ namespace order
     }
     public class orderService
     {
-        private List<Order> orderList = new List<Order>();
+        public List<Order> orderList = new List<Order>();
         public List<Order> SearchId(int j)
         {
             var query1 = from s1 in orderList
