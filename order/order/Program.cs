@@ -270,7 +270,7 @@ internal class Program
                         Console.Write("客户名称" + a.ClientName + "\n");
                         a.showOrderDetail();
                     }
-                    break；
+                    break;
                 case "7": i = false; break;
                 default: Console.WriteLine("输入错误"); break;
             }
