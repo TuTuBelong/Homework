@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "order", "order\order.csproj", "{719D166F-2E95-4747-9438-48FF993EA3C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService", "OrderService\OrderService.csproj", "{D602140F-2D82-4544-99C9-F6334EDAE4A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderServiceTest", "OrderService\OrderServiceTest.csproj", "{D602140F-2D82-4544-99C9-F6334EDAE4A9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{719D166F-2E95-4747-9438-48FF993EA3C2} = {719D166F-2E95-4747-9438-48FF993EA3C2}
 	EndProjectSection

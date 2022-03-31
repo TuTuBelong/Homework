@@ -114,7 +114,7 @@ namespace order
             return this.Name == o.Name;
         }
     }
-    class orderService
+    public class orderService
     {
         private List<Order> orderList = new List<Order>();
         public List<Order> SearchId(int j)
@@ -153,35 +153,38 @@ namespace order
             }
             if (orderList.Contains(a))
             {
-                throw new ApplicationException($"the order {a.Id} already exists!");
+              throw new ApplicationException($"the order {a.Id} already exists!");
             }
-            orderList.Add(a);
-            Console.WriteLine("s!");
+            else
+            {
+              orderList.Add(a);
+            }
+            
         }
     
-    public void removeOrder()
+    public void removeOrder(int i)
     {
         try
         {
-            Console.WriteLine("输入单号删除订单：");
-            int id = Convert.ToInt32(Console.ReadLine());
+            
+            int id = i;
             int index = 0;
             foreach (Order a in this.orderList)
             {
                 if (a.Id == id) index = this.orderList.IndexOf(a);
             }
-            this.orderList.RemoveAt(index); Console.WriteLine("删除成功");
+            this.orderList.RemoveAt(index); 
 
         }
         catch
         {
-            Console.WriteLine("输入错误");
+            Console.WriteLine("");
         }
 
     }
     public void ShowOrder()
     {
-
+           
             foreach (Order a in orderList)
             {
                 Console.Write("订单名称" + a.OrderName + " ");
@@ -226,7 +229,7 @@ internal class Program
                         //service.orderList.ForEach(o => Console.WriteLine(o.ClientName));
 
                         break;
-                case "2": service.removeOrder(); break;
+                case "2": service.removeOrder(1); break;
                 case "3":
                     Console.WriteLine("请输入查询的订单编号");
                     int j1 = Convert.ToInt32(Console.ReadLine());
