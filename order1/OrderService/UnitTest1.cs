@@ -21,11 +21,11 @@ namespace OrderService
           orderService service1 = new orderService();
           Order order1 = new Order(1, "食品", 1000, "小康");
           service1.AddOrder(order1);
-          Assert.IsTrue(service1.orderList!=null);
+          Assert.IsTrue(service1.orderList.Count==1);
         }
     [TestMethod]
     [ExpectedException(typeof(ApplicationException))]
-    public void TestAddOrder2()
+    public void TestAddOrdeqr2()
     {
       orderService service2 = new orderService();
       service2.AddOrder(null);
@@ -35,14 +35,20 @@ namespace OrderService
     {
       orderService service3 = new orderService();
       Order order1 = new Order(1, "食品", 1000, "小康");
-      service3.removeOrder(1);//exist
-      Assert.IsTrue(service3.orderList.Count ==0);
+      service3.AddOrder(order1);
+      Order order2 = new Order(2, "电子产品", 5000, "谢劲松");
+      service3.AddOrder(order2);
+      service3.removeOrder(2);//exist
+      Assert.IsTrue(service3.orderList.Count ==1);
     }
     [TestMethod]
     public void TestRemoveOrder2()
     {
       orderService service4=new orderService();
+      Order order1 = new Order(1, "食品", 1000, "小康");
+      service4.AddOrder(order1);  
       service4.removeOrder(100);//not exist
+      Assert.IsTrue(service4.orderList.Count ==1);
     }
 
     [TestMethod]

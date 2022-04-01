@@ -168,12 +168,16 @@ namespace order
         {
             
             int id = i;
-            int index = 0;
+            int index =0;
             foreach (Order a in this.orderList)
             {
-                if (a.Id == id) index = this.orderList.IndexOf(a);
-            }
-            this.orderList.RemoveAt(index); 
+          if (a.Id == id)
+          {
+            index = this.orderList.IndexOf(a);
+            this.orderList.RemoveAt(index);
+          }
+        }
+            
 
         }
         catch
