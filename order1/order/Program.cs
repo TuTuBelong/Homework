@@ -76,13 +76,13 @@ namespace order
                 serializer.Serialize(fs, this);
             }
         }
-        public List<Order> import()
+        public void import(string path)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(Order));
-            using (FileStream fs = new FileStream("order.xml", FileMode.Open))
+            using (FileStream fs = new FileStream(path, FileMode.Open))
             {
                 List<Order> list = (List<Order>)xmlSerializer.Deserialize(fs);
-                return list;
+                
             }
 
         }
