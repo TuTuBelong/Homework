@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -48,7 +48,7 @@ namespace cayleyTree
 
         private void button2_Click(object sender, EventArgs e)
         {
-            switch (textBox1.Text)
+            switch (comboBox1.SelectedItem)
             {
                 case "red":
                     penColor = Pens.Red;
@@ -202,5 +202,12 @@ namespace cayleyTree
         {
 
         }
+
+    private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+     
+      comboBox1.DropDownStyle=ComboBoxStyle.DropDownList;
+      
     }
+  }
 }
