@@ -10,6 +10,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderServiceTest", "OrderSe
 		{719D166F-2E95-4747-9438-48FF993EA3C2} = {719D166F-2E95-4747-9438-48FF993EA3C2}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "orderForm", "orderForm\orderForm.csproj", "{397A8EB1-4796-4648-B858-9C700C4B6EDC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{719D166F-2E95-4747-9438-48FF993EA3C2} = {719D166F-2E95-4747-9438-48FF993EA3C2}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +29,10 @@ Global
 		{D602140F-2D82-4544-99C9-F6334EDAE4A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D602140F-2D82-4544-99C9-F6334EDAE4A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D602140F-2D82-4544-99C9-F6334EDAE4A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{397A8EB1-4796-4648-B858-9C700C4B6EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397A8EB1-4796-4648-B858-9C700C4B6EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397A8EB1-4796-4648-B858-9C700C4B6EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397A8EB1-4796-4648-B858-9C700C4B6EDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

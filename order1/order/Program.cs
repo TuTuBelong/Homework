@@ -68,24 +68,7 @@ namespace order
                 Console.WriteLine("{0} {1} {2} {3}", this.orderDetail.IndexOf(a) + 1, a.Name, a.Number, a.Price);
             }
         }
-        public void export()
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(Order));
-            using (FileStream fs = new FileStream("order.xml", FileMode.Create))
-            {
-                serializer.Serialize(fs, this);
-            }
-        }
-        public void import(string path)
-        {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Order));
-            using (FileStream fs = new FileStream(path, FileMode.Open))
-            {
-                List<Order> list = (List<Order>)xmlSerializer.Deserialize(fs);
-                
-            }
-
-        }
+        
     }
     public class OrderDetail
     {
@@ -199,7 +182,25 @@ namespace order
             }
 
         }
-}
+          public void export()
+          {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Order>));
+            using (FileStream fs = new FileStream("order.xml", FileMode.Create))
+            {
+              serializer.Serialize(fs, this);
+            }
+          }
+          public void import(string path)
+          {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Order>));
+            using (FileStream fs = new FileStream(path, FileMode.Open))
+            {
+              List<Order> list = (List<Order>)xmlSerializer.Deserialize(fs);
+
+            }
+
+          }
+  }
 internal class Program
 {
     static void Main(string[] args)
