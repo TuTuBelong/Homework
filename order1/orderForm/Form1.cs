@@ -34,11 +34,7 @@ namespace orderForm
      
 
     }
-    public  void addOrder(int num,string name,int price,string client)
-    {
-
-      service.AddOrder(new Order(num, name, price, client));
-    }
+    
     private void panel2_Paint(object sender, PaintEventArgs e)
     {
       
@@ -86,7 +82,15 @@ namespace orderForm
     {
      Form2 form2 = new Form2();
       form2.ShowDialog();
-      
+      if(form2.orders.Count != 0)
+      {
+        foreach(Order a in form2.orders)
+        {
+          service.orderList.Add(a);
+        }
+      }
+      dataGridView1.DataSource = null;
+      dataGridView1.DataSource = service.orderList;
     }
 
     private void btnDelete_Click(object sender, EventArgs e)

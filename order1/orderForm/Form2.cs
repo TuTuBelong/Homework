@@ -12,8 +12,10 @@ using order;
 
 namespace orderForm
 {
+  
   public partial class Form2 : Form
   {
+    public List<Order> orders = new List<Order>();
     public Form2()
     {
       InitializeComponent();
@@ -21,14 +23,15 @@ namespace orderForm
 
     private void button1_Click(object sender, EventArgs e)
     {
-      Form1 form = new Form1();
       int i;
       bool x = int.TryParse(textBox2.Text, out i);
       string j = textBox1.Text;
       int k;
       bool y = int.TryParse(textBox3.Text, out k);
       string l=textBox4.Text;
-      form.addOrder(i,j,k,l);
+     Order order = new Order(i,j,k,l);
+      orders.Add(order);
+      this.Close();
     }
 
     private void button2_Click(object sender, EventArgs e)
