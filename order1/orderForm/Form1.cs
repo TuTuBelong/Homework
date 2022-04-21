@@ -31,10 +31,15 @@ namespace orderForm
       service.orderList.Add(order1);
       service.orderList.Add(order2);
       orderBindingSource.DataSource = service.orderList;
-     
+      queryAll();
+      
 
     }
-    
+    private void queryAll()
+    {
+      Order thisOrder = (Order)orderBindingSource.Current;
+      dataGridView2.DataSource = thisOrder.orderDetail;
+    }
     private void panel2_Paint(object sender, PaintEventArgs e)
     {
       
@@ -103,8 +108,7 @@ namespace orderForm
 
     private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
-      Order thisOrder = (Order)orderBindingSource.Current;
-      orderDetailBindingSource.DataSource = thisOrder.orderDetail;
+      
     }
 
     private void textBox1_TextChanged(object sender, EventArgs e)
