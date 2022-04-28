@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +32,7 @@ namespace Crawler
 
     public SimpleCrawler()
     {
-      MaxSize = 100;
+      MaxSize = 50;
       HtmlEncoding = Encoding.UTF8;
     }
     public void Crawl()
@@ -40,13 +40,13 @@ namespace Crawler
       Downloaded.Clear();
       queue.Clear();
       queue.Enqueue(StartURL);
-      while (Downloaded.Count <= MaxSize && queue.Count > 0)
+      while (urls.Count <= MaxSize && queue.Count > 0)
       {
         string url = queue.Dequeue();
         try
         {
           string html = DownLoad(url);
-          Downloaded[url] = true;
+          urls[url] = true;
           DownloadAll(this, url, "成功");
           Parse(html, url);
 
@@ -56,7 +56,7 @@ namespace Crawler
           DownloadAll(this, url, "error" + ex.Message);
         }
       }
-      CrawlerStopped(this);
+
     }
 
     public string DownLoad(string url)
@@ -66,8 +66,11 @@ namespace Crawler
         WebClient webClient = new WebClient();
         webClient.Encoding = Encoding.UTF8;
         string html = webClient.DownloadString(url);
-        string fileName = count.ToString();
-        File.WriteAllText(fileName, html, Encoding.UTF8);
+        lock (this)
+        {
+          string fileName = count.ToString();
+          File.WriteAllText(fileName, html, Encoding.UTF8);
+        }
         return html;
       }
       catch (Exception ex)
