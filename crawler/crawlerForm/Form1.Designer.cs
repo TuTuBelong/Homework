@@ -1,4 +1,4 @@
-﻿namespace crawlerForm
+namespace crawlerForm
 {
     partial class Form1
     {
@@ -28,25 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.txtUrl = new System.Windows.Forms.TextBox();
+            this.dgvResult = new System.Windows.Forms.DataGridView();
+            this.lblInfo = new System.Windows.Forms.Label();
+            this.index = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.URL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).BeginInit();
             this.SuspendLayout();
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(37, 53);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(331, 328);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.button2.Location = new System.Drawing.Point(517, 358);
+            this.button2.Location = new System.Drawing.Point(648, 29);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -54,22 +49,61 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // textBox1
+            // txtUrl
             // 
-            this.textBox1.Location = new System.Drawing.Point(517, 199);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 25);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtUrl.Location = new System.Drawing.Point(22, 27);
+            this.txtUrl.Name = "txtUrl";
+            this.txtUrl.Size = new System.Drawing.Size(570, 25);
+            this.txtUrl.TabIndex = 3;
+            this.txtUrl.Text = "http://www.cnblogs.com/dstang2000/";
+            this.txtUrl.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // label1
+            // dgvResult
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(419, 205);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 15);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "startUrl";
+            this.dgvResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.index,
+            this.URL,
+            this.status});
+            this.dgvResult.Location = new System.Drawing.Point(22, 77);
+            this.dgvResult.Name = "dgvResult";
+            this.dgvResult.RowHeadersWidth = 51;
+            this.dgvResult.RowTemplate.Height = 27;
+            this.dgvResult.Size = new System.Drawing.Size(701, 321);
+            this.dgvResult.TabIndex = 4;
+            this.dgvResult.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResult_CellContentClick);
+            // 
+            // lblInfo
+            // 
+            this.lblInfo.AutoSize = true;
+            this.lblInfo.Location = new System.Drawing.Point(22, 59);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(0, 15);
+            this.lblInfo.TabIndex = 5;
+            // 
+            // index
+            // 
+            this.index.DataPropertyName = "Index";
+            this.index.HeaderText = "序号";
+            this.index.MinimumWidth = 6;
+            this.index.Name = "index";
+            this.index.Width = 50;
+            // 
+            // URL
+            // 
+            this.URL.DataPropertyName = "URL";
+            this.URL.HeaderText = "URL";
+            this.URL.MinimumWidth = 6;
+            this.URL.Name = "URL";
+            this.URL.Width = 350;
+            // 
+            // status
+            // 
+            this.status.DataPropertyName = "Status";
+            this.status.HeaderText = "状态";
+            this.status.MinimumWidth = 6;
+            this.status.Name = "status";
+            this.status.Width = 125;
             // 
             // Form1
             // 
@@ -77,23 +111,27 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.lblInfo);
+            this.Controls.Add(this.dgvResult);
+            this.Controls.Add(this.txtUrl);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.richTextBox1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-    }
+        private System.Windows.Forms.TextBox txtUrl;
+    private System.Windows.Forms.DataGridView dgvResult;
+    private System.Windows.Forms.Label lblInfo;
+    private System.Windows.Forms.DataGridViewTextBoxColumn index;
+    private System.Windows.Forms.DataGridViewTextBoxColumn URL;
+    private System.Windows.Forms.DataGridViewTextBoxColumn status;
+  }
 }
 

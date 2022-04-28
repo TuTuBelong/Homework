@@ -1,27 +1,29 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Crawler;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace crawlerForm
 {
     public partial class Form1 : Form
     {
-        public SimpleCrawler myCrawler;
-        public Form1()
+    BindingSource resultBindingSource = new BindingSource();
+    SimpleCrawler crawler = new SimpleCrawler();
+    public Form1()
         {
             InitializeComponent();
-            myCrawler = new SimpleCrawler();
-            textBox1.DataBindings.Add("Text", myCrawler, "startUrl");
-        }
+           dgvResult.DataSource = resultBindingSource;
+           crawler.DownloadAll += Crawler_PageDownloaded;
+           crawler.CrawlerStopped += Crawler_CrawlerStopped;
+    }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -38,15 +40,52 @@ namespace crawlerForm
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            myCrawler.startUrl = textBox1.Text;
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-               myCrawler.urls.Add(myCrawler.startUrl, false);//加入初始页面
-               new Thread(myCrawler.Crawl).Start();
-        }
+            resultBindingSource.Clear();
+            crawler.StartURL = txtUrl.Text;
+            Match match = Regex.Match(crawler.StartURL, SimpleCrawler.urlParseRegex);
+            if (match.Length == 0) return;
+            string host = match.Groups["host"].Value;
+            crawler.HostFilter = "^" + host + "$";
+            crawler.FileFilter = ".(html?|aspx|jsp|php)$|^[^.]*$";
+            Task.Run(() => crawler.Crawl());
+            lblInfo.Text = "爬虫已启动....";
     }
+    private void Crawler_CrawlerStopped(SimpleCrawler obj)
+    {
+      Action action = () => lblInfo.Text = "爬虫已停止";
+      if (this.InvokeRequired)
+      {
+        this.Invoke(action);
+      }
+      else
+      {
+        action();
+      }
+    }
+
+    private void Crawler_PageDownloaded(SimpleCrawler crawler, string url, string info)
+    {
+      var pageInfo = new { Index = resultBindingSource.Count + 1, URL = url, Status = info };//绑定表格各个行列
+      Action action = () => { resultBindingSource.Add(pageInfo); };
+      if (this.InvokeRequired)
+      {
+        this.Invoke(action);
+      }
+      else
+      {
+        action();
+      }
+    }
+    private void button1_Click(object sender, EventArgs e)
+        {
+               
+        }
+
+    private void dgvResult_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+
+    }
+  }
 }
