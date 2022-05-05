@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using order;
-
+using MySql.Data.MySqlClient;
 namespace orderForm
 {
     public partial class Form1 : Form
@@ -16,8 +16,7 @@ namespace orderForm
         orderService service = new orderService();
     public Form1()
         {
-            InitializeComponent();
-            
+            InitializeComponent();   
       Order order1 = new Order(1, "食品", 1000, "小康");
       Order order2 = new Order(2, "电子产品", 5000, "谢劲松");
       OrderDetail milk = new OrderDetail("牛奶", 5, 5);
@@ -34,6 +33,12 @@ namespace orderForm
       queryAll();
       
 
+    }
+    private void connect()
+    {
+      string connStr = "Database=register;Data Source=127.0.0.1;port=3306;User Id=root;";
+      MySqlConnection conn = new MySqlConnection(connStr);//创建Connection对象
+      conn.Open();
     }
     private void queryAll()
     {
